@@ -26,10 +26,14 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.gradle/caches
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-        restore-keys: ${{ runner.os }}-gradle
+        key: ${{ hashFiles('**/*gradle*') }}
+        restore-keys: ${{ runner.os }}
 
     - name: Build project
+      env:
+        DEBUG_KEY_PASSWORD: android
+        DEBUG_STORE_PASSWORD: android
+        DEBUG_KEY_ALIAS: androiddebugkey
       run: |
         if ${{ !!github.head_ref }}; then echo "::warning:: Gradle $WARN_ON_PR"; fi
         gradle wrapper
